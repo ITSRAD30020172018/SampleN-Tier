@@ -33,7 +33,8 @@ namespace SampleWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // adding user identity class  
-            services.AddIdentity<ApplicationUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true)
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                cfg => cfg.User.RequireUniqueEmail = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //add Authentication to the Web App

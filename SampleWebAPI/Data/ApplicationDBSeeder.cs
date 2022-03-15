@@ -16,10 +16,14 @@ namespace SampleWebAPI.Data
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApplicationDbSeeder(ApplicationDbContext ctx, UserManager<ApplicationUser> userManager)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public ApplicationDbSeeder(ApplicationDbContext ctx, 
+            UserManager<ApplicationUser> userManager, 
+            RoleManager<IdentityRole> roleManager)
         {
             _ctx = ctx;
             _userManager = userManager;
+            _roleManager = roleManager;
             
         }
         public async Task Seed()
@@ -39,6 +43,7 @@ namespace SampleWebAPI.Data
                                     SecurityStamp = Guid.NewGuid().ToString()
                                 },
                             };
+               
                 // Create all Users with the same password
                 foreach (ApplicationUser user in UserSeeds)
                 {
@@ -50,7 +55,35 @@ namespace SampleWebAPI.Data
                     }
                 }
                 _ctx.SaveChanges();
+
+               
             }
+            if (_ctx.Roles.Count() < 1)
+            {
+                await _roleManager.CreateAsync(
+                    new IdentityRole { Id = Guid.NewGuid().ToString(), 
+                        Name = "Widget Manager" });
+            }
+            
+            _ctx.SaveChanges();
+
+            ApplicationUser ppowell = await _userManager.FindByNameAsync("powell.paul@itsligo.ie");
+            if (ppowell != null)
+            {
+                
+                var roles = await _userManager.GetRolesAsync(ppowell);
+                if (roles.Count < 1)
+                {
+                    var result = await _userManager.AddToRoleAsync(ppowell, "Widget Manager");
+                    if (result != IdentityResult.Success)
+                    {
+                        throw new InvalidOperationException("Could add user to Admin Role");
+                    }
+
+                }
+            }
+            _ctx.SaveChanges();
+
         }
     }
 }

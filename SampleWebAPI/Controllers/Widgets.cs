@@ -1,4 +1,5 @@
 ﻿using DataModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SampleWebAPI.Controllers
 {
+    [Authorize(Roles="Widget Manager")]
     public class Widgets : ControllerBase
     {
         private readonly Iwidget _wrepo;
