@@ -19,7 +19,7 @@ namespace ConsoleApp
                 Console.WriteLine("Logged In");
                 Console.WriteLine("Token is: {0}", client.UserToken);
             }
-            var widgets = client.getCollection<Widget>("GetAll").Result;
+            var widgets = client.getCollection<Widget>("Widgets/GetAll").Result;
                 Console.WriteLine("Wdiget Count {0}",widgets.Count);
         }
     }

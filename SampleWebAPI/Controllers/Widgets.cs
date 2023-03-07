@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace SampleWebAPI.Controllers
 {
+    [Route("[controller]")]
     [Authorize(Roles="Widget Manager")]
     public class Widgets : ControllerBase
     {

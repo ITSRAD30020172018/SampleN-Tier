@@ -34,6 +34,9 @@ namespace DataModel
             };
             builder.Entity<Widget>().HasData(widgets);
 
+            List<Widget> cvs_widegts = DBHelper.Get<Widget, WidgetMap>("DataModel.CSVMapper.Widgets.csv");
+            builder.Entity<Widget>().HasData(cvs_widegts);
+
             base.OnModelCreating(builder);
         }
     }
