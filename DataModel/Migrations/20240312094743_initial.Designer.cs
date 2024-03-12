@@ -6,26 +6,31 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace DataModel.Migrations
 {
     [DbContext(typeof(BusinessContext))]
-    [Migration("20220314192408_Initial Widget Model")]
-    partial class InitialWidgetModel
+    [Migration("20240312094743_initial")]
+    partial class initial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.16")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("DataModel.Widget", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<float>("Cost")
                         .HasColumnType("real");
@@ -49,6 +54,18 @@ namespace DataModel.Migrations
                             ID = 2,
                             Cost = 15f,
                             Description = "Widget 2"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Cost = 12f,
+                            Description = "Csv Widget 2"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Cost = 1.3f,
+                            Description = "Csv Widget 3"
                         });
                 });
 #pragma warning restore 612, 618

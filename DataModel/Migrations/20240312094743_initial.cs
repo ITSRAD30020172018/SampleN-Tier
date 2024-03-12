@@ -1,9 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DataModel.Migrations
 {
-    public partial class InitialWidgetModel : Migration
+    /// <inheritdoc />
+    public partial class initial : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -23,14 +29,16 @@ namespace DataModel.Migrations
             migrationBuilder.InsertData(
                 table: "Widgets",
                 columns: new[] { "ID", "Cost", "Description" },
-                values: new object[] { 1, 12f, "Widget 1" });
-
-            migrationBuilder.InsertData(
-                table: "Widgets",
-                columns: new[] { "ID", "Cost", "Description" },
-                values: new object[] { 2, 15f, "Widget 2" });
+                values: new object[,]
+                {
+                    { 1, 12f, "Widget 1" },
+                    { 2, 15f, "Widget 2" },
+                    { 3, 12f, "Csv Widget 2" },
+                    { 4, 1.3f, "Csv Widget 3" }
+                });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
